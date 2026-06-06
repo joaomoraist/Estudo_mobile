@@ -1,56 +1,592 @@
-# Welcome to your Expo app 👋
+# 📚 Guia de Estudos React Native com Expo
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Objetivo
 
-## Get started
+Este projeto foi desenvolvido para demonstrar os principais conceitos cobrados na prova:
 
-1. Install dependencies
+* Criação de projetos React Native utilizando Expo;
+* Consumo de APIs e manipulação de dados;
+* Navegação entre telas utilizando rotas;
+* Desenvolvimento e estruturação de layouts.
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+# 1. Criando um Projeto React Native com Expo
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Instalação do Expo
 
 ```bash
-npm run reset-project
+npm install -g expo-cli
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Criando um novo projeto
 
-### Other setup steps
+```bash
+npx create-expo-app meu-app
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Executando o projeto
 
-## Learn more
+```bash
+npm start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+ou
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npx expo start
+```
 
-## Join the community
+O Expo abrirá um painel onde é possível executar o aplicativo em:
 
-Join our community of developers creating universal apps.
+* Android
+* iOS
+* Navegador
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+# 2. Estrutura do Projeto
+
+```text
+src
+├── app
+│   ├── index.tsx
+│   ├── signup.tsx
+│
+├── components
+│
+├── services
+│   └── api.ts
+│
+└── assets
+```
+
+### Função de cada pasta
+
+#### app
+
+Contém as telas da aplicação.
+
+Exemplo:
+
+```text
+index.tsx
+```
+
+Tela inicial.
+
+```text
+signup.tsx
+```
+
+Tela de cadastro.
+
+---
+
+#### components
+
+Armazena componentes reutilizáveis.
+
+Exemplo:
+
+```text
+Button.tsx
+Input.tsx
+```
+
+Esses componentes podem ser utilizados em várias telas.
+
+---
+
+#### services
+
+Responsável por armazenar serviços da aplicação.
+
+Exemplo:
+
+```text
+api.ts
+```
+
+Arquivo responsável por consumir APIs.
+
+---
+
+# 3. Desenvolvimento de Layouts
+
+No React Native não utilizamos HTML.
+
+Utilizamos componentes próprios.
+
+## Principais Componentes
+
+### View
+
+Equivalente a uma div.
+
+```tsx
+<View>
+  <Text>Olá</Text>
+</View>
+```
+
+---
+
+### Text
+
+Exibe textos na tela.
+
+```tsx
+<Text>Olá Mundo</Text>
+```
+
+---
+
+### Image
+
+Exibe imagens.
+
+```tsx
+<Image
+  source={{
+    uri: "https://reactnative.dev/img/tiny_logo.png",
+  }}
+/>
+```
+
+---
+
+### StyleSheet
+
+Responsável pela estilização.
+
+```tsx
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+});
+```
+
+---
+
+## Flexbox
+
+O React Native utiliza Flexbox por padrão.
+
+### Centralização
+
+```tsx
+container: {
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+}
+```
+
+### O que significa?
+
+```text
+flex: 1
+→ ocupa toda a tela
+
+justifyContent
+→ eixo vertical
+
+alignItems
+→ eixo horizontal
+```
+
+---
+
+# 4. Navegação entre Telas
+
+Este projeto utiliza Expo Router.
+
+## Tela Inicial
+
+```text
+index.tsx
+```
+
+## Tela Cadastro
+
+```text
+signup.tsx
+```
+
+---
+
+## Criando um Link
+
+```tsx
+<Link href="/signup">
+  Clique aqui
+</Link>
+```
+
+### O que acontece?
+
+```text
+Usuário clica
+↓
+Expo Router encontra signup.tsx
+↓
+Nova tela é aberta
+```
+
+---
+
+## Estrutura de Rotas
+
+```text
+app
+├── index.tsx
+└── signup.tsx
+```
+
+Rotas geradas automaticamente:
+
+```text
+/          → index.tsx
+/signup    → signup.tsx
+```
+
+---
+
+# 5. Consumo de APIs
+
+## O que é uma API?
+
+Uma API é um serviço que fornece dados para nossa aplicação.
+
+Neste projeto foi utilizada:
+
+```text
+https://jsonplaceholder.typicode.com
+```
+
+---
+
+## Arquivo api.ts
+
+```ts
+const API_URL = "https://jsonplaceholder.typicode.com";
+
+export async function getUsers() {
+  const response = await fetch(`${API_URL}/users`);
+  const data = await response.json();
+
+  return data;
+}
+```
+
+---
+
+## Explicação
+
+### Endereço da API
+
+```ts
+const API_URL = "https://jsonplaceholder.typicode.com";
+```
+
+Define o endereço principal.
+
+---
+
+### Fazendo a requisição
+
+```ts
+await fetch(`${API_URL}/users`);
+```
+
+Busca os usuários da API.
+
+---
+
+### Convertendo para JSON
+
+```ts
+await response.json();
+```
+
+Transforma os dados em um formato que o JavaScript entende.
+
+---
+
+### Retornando os dados
+
+```ts
+return data;
+```
+
+Entrega os usuários para a tela.
+
+---
+
+# 6. Manipulação de Dados
+
+## Criando um Estado
+
+```tsx
+const [users, setUsers] = useState([]);
+```
+
+### O que significa?
+
+```text
+users
+→ guarda os usuários
+
+setUsers
+→ atualiza os usuários
+```
+
+---
+
+## useEffect
+
+```tsx
+useEffect(() => {
+  async function loadUsers() {
+    const data = await getUsers();
+    setUsers(data);
+  }
+
+  loadUsers();
+}, []);
+```
+
+### O que acontece?
+
+Quando a tela abre:
+
+```text
+Tela abre
+↓
+loadUsers()
+↓
+getUsers()
+↓
+API responde
+↓
+setUsers(data)
+↓
+Tela atualiza
+```
+
+---
+
+# 7. Exibindo Dados da API
+
+## Utilizando map()
+
+```tsx
+{
+  users.map((user: any) => (
+    <Text key={user.id}>
+      {user.name}
+    </Text>
+  ));
+}
+```
+
+---
+
+### Exemplo
+
+Se a API retornar:
+
+```js
+[
+  {
+    id: 1,
+    name: "João"
+  },
+  {
+    id: 2,
+    name: "Maria"
+  }
+]
+```
+
+Resultado:
+
+```text
+João
+Maria
+```
+
+---
+
+# 8. Componentização
+
+## O que é um componente?
+
+Um componente é uma parte reutilizável da interface.
+
+Exemplo:
+
+```tsx
+<Input />
+```
+
+e
+
+```tsx
+<Button />
+```
+
+Podem ser utilizados em várias telas.
+
+---
+
+## Vantagens
+
+* Reutilização de código;
+* Organização;
+* Facilidade de manutenção;
+* Menos repetição.
+
+---
+
+# 9. Fluxo Completo da Aplicação
+
+```text
+Usuário abre o App
+↓
+index.tsx é carregado
+↓
+useEffect executa
+↓
+getUsers()
+↓
+fetch()
+↓
+API responde
+↓
+response.json()
+↓
+setUsers(data)
+↓
+users recebe os dados
+↓
+map() percorre os usuários
+↓
+Dados aparecem na tela
+```
+
+---
+
+# 10. Resumo para a Prova
+
+## Criar Projeto Expo
+
+```bash
+npx create-expo-app nome-do-projeto
+```
+
+---
+
+## Consumir API
+
+```ts
+const response = await fetch(URL);
+const data = await response.json();
+```
+
+---
+
+## Criar Estado
+
+```ts
+const [dados, setDados] = useState([]);
+```
+
+---
+
+## Executar ao abrir a tela
+
+```ts
+useEffect(() => {
+}, []);
+```
+
+---
+
+## Navegar entre telas
+
+```tsx
+<Link href="/signup">
+```
+
+---
+
+## Mostrar listas
+
+```tsx
+dados.map(...)
+```
+
+---
+
+## Componentes principais
+
+```text
+View
+Text
+Image
+StyleSheet
+```
+
+---
+
+# Perguntas que podem cair na prova
+
+### O que é uma API?
+
+É um serviço que fornece dados para uma aplicação.
+
+---
+
+### Qual a função do useState?
+
+Armazenar e atualizar dados na tela.
+
+---
+
+### Qual a função do useEffect?
+
+Executar ações quando a tela é carregada.
+
+---
+
+### Para que serve o fetch?
+
+Fazer requisições para APIs.
+
+---
+
+### Para que serve o response.json()?
+
+Converter a resposta para JSON.
+
+---
+
+### Para que serve o map()?
+
+Percorrer listas e exibir informações na tela.
+
+---
+
+### O que é um componente?
+
+Uma parte reutilizável da interface.
+
+---
+
+### Como navegar entre telas?
+
+Utilizando o componente Link do Expo Router.
