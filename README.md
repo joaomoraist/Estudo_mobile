@@ -25,6 +25,12 @@ npm install -g expo-cli
 npx create-expo-app meu-app
 ```
 
+## Resetando o projeto
+
+```bash
+npx expo reset-project
+```
+
 ## Executando o projeto
 
 ```bash
