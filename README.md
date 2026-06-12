@@ -28,7 +28,7 @@ npx create-expo-app meu-app
 ## Resetando o projeto
 
 ```bash
-npx expo reset-project
+npm run reset-project
 ```
 
 ## Executando o projeto
